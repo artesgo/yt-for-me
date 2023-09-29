@@ -23,7 +23,7 @@ const config = {
 		},
 		files: {
 			assets: 'static',
-			lib: 'src/components',
+			lib: 'src/lib',
 		},
 	}
 };
