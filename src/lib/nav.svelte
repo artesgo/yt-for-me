@@ -7,7 +7,7 @@
 <nav class="bg-slate-900">
     <section class="yt-fixed flex items-center">
         <button class="menu m-4" on:click={() => dispatch('hamburger')}>
-            <img width="24px" src="bars-solid.svg" alt="Menu">
+            <img width="24px" src="./bars-solid.svg" alt="Menu">
         </button>
         <a href="/">logo</a>
     </section>
@@ -18,13 +18,13 @@
             <input id="search" type="text" placeholder="Search" />
         </div>
         <button class="m-4">
-            <img width="24px" src="magnifying-glass-solid.svg" alt="search" />
+            <img width="24px" src="./magnifying-glass-solid.svg" alt="search" />
         </button>
     </section>
 
     <section class="flex">
         <div class="notification m-4">
-            <img width="24px" src="bell-solid.svg" alt="Notifications">
+            <img width="24px" src="./bell-solid.svg" alt="Notifications">
         </div>
         <div class="profile m-4">
             profile icon
