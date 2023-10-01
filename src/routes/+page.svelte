@@ -12,8 +12,6 @@
   })
 </script>
 
-<h1>Welcome To Svelte Kit</h1>
-
 <div class="flex subscriptions justify-between px-8 flex-wrap">
   <Thumb
     title="Man and dog"
@@ -21,6 +19,7 @@
     avatar="./bell-solid.svg"
     creator="Johny bigg apples"
     views="5"
+    id={1}
     loading={loading}
   />
   <Thumb
@@ -29,6 +28,7 @@
     avatar="./bell-solid.svg"
     creator="Exploration+"
     views="51"
+    id={2}
     loading={loading} />
   <Thumb
     title="Mountain Exploration+"
@@ -36,6 +36,7 @@
     avatar="./bell-solid.svg"
     creator="Exploration+"
     views="59"
+    id={3}
     loading={loading} />
   <Thumb
     title="Starry Night"
@@ -43,6 +44,7 @@
     avatar="./bell-solid.svg"
     creator="Relazation+"
     views="59"
+    id={4}
     loading={loading} />
 
   <Thumb />

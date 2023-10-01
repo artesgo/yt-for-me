@@ -5,14 +5,42 @@
     export let views = '';
     export let avatar = '';
     export let loading = true;
+    export let id = 0;
+
+    import gsap from 'gsap';
+    function hover() {
+        setTimeout(() => {
+            gsap.to('.thumbnail-' + id, {
+                scale: 1.2,
+                duration: 0.5
+            });
+        });
+    }
+
+    function out() {
+        setTimeout(() => {
+            gsap.to('.thumbnail-' + id, {
+                scale: 1,
+                duration: 0.5
+            });
+        });
+    }
+
+    $: classes = "thumbnail-" + id;
 </script>
 
 <section>
-    <div class="thumbnail bg-slate-600 m-4">
+    <a class="thumbnail bg-slate-600 m-4"
+        href="/"
+        on:mouseover={hover}
+        on:focus={hover}
+        on:mouseout={out}
+        on:blur={out}
+    >
         {#if !loading}
-            <img src={thumbnail} alt="">
+            <img class={classes} src={thumbnail} alt="">
         {/if}
-    </div>
+    </a>
     <div class="flex gap-4 mx-4">
         <div class="avatar bg-slate-600">
             {#if !loading}
@@ -32,6 +60,7 @@
 </section>
 
 <style>
+    img,
     .thumbnail {
         width: 320px;
         height: 180px;
