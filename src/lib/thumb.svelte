@@ -64,6 +64,7 @@
     .thumbnail {
         width: 320px;
         height: 180px;
+        display: inline-block;
     }
 
     .avatar {

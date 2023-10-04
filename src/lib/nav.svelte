@@ -4,7 +4,7 @@
     let dispatch = createEventDispatcher();
 </script>
 
-<nav class="bg-slate-900">
+<nav class="bg-slate-900 h-16">
     <section class="yt-fixed flex items-center">
         <button class="menu m-4" on:click={() => dispatch('hamburger')}>
             <img width="24px" src="./bars-solid.svg" alt="Menu">
@@ -35,6 +35,8 @@
 <style>
     nav {
         display: flex;
+        position: relative;
+        z-index: 51;
     }
     .yt-fixed {
         width: 250px;
