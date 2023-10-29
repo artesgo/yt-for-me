@@ -13,6 +13,7 @@
 </script>
 
 <div class="flex subscriptions justify-between px-8 flex-wrap">
+  <!-- each of these thumbnails need to come from database, images to be stored on db -->
   <Thumb
     title="Man and dog"
     thumbnail="./man-and-dog.jpeg"
@@ -61,5 +62,6 @@
   .flex {
     padding-bottom: 4rem;
     max-width: 1600px;
+    margin: 0 auto;
   }
 </style>

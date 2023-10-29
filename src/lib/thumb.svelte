@@ -1,50 +1,54 @@
 <script lang="ts">
-    export let thumbnail = '';
-    export let title = '';
-    export let creator = '';
-    export let views = '';
-    export let avatar = '';
+    import gsap from "gsap";
+    export let thumbnail = "";
+    export let title = "";
+    export let creator = "";
+    export let views = "";
+    export let avatar = "";
     export let loading = true;
     export let id = 0;
+    export let href = "/";
 
-    import gsap from 'gsap';
     function hover() {
         setTimeout(() => {
-            gsap.to('.thumbnail-' + id, {
+            gsap.to(".thumbnail-" + id, {
                 scale: 1.2,
-                duration: 0.5
+                duration: 0.5,
             });
         });
     }
 
     function out() {
         setTimeout(() => {
-            gsap.to('.thumbnail-' + id, {
+            gsap.to(".thumbnail-" + id, {
                 scale: 1,
-                duration: 0.5
+                duration: 0.5,
             });
         });
     }
 
-    $: classes = "thumbnail-" + id;
+    $: classes = "thumbnail-image thumbnail-" + id;
 </script>
 
 <section>
-    <a class="thumbnail bg-slate-600 m-4"
-        href="/"
+    <!-- a tag is a link -->
+    <a
+        class="thumbnail bg-slate-600 m-4"
+        {href}
         on:mouseover={hover}
         on:focus={hover}
         on:mouseout={out}
         on:blur={out}
     >
         {#if !loading}
-            <img class={classes} src={thumbnail} alt="">
+            <!-- $: classes above adds thumbnail-image / thumbnail-id to the img below -->
+            <img class={classes} src={thumbnail} alt="" />
         {/if}
     </a>
     <div class="flex gap-4 mx-4">
-        <div class="avatar bg-slate-600">
+        <div class="avatar" class:bg-slate-600={loading}>
             {#if !loading}
-                <img src={avatar} alt="">
+                <img width="30px" height="30px" src={avatar} alt="" />
             {/if}
         </div>
         <div>
@@ -52,15 +56,15 @@
                 <div class="long-text mb-4">{title}</div>
                 <div class="text">{creator} | {views}</div>
             {:else}
-                <div class="long-text bg-slate-600 mb-4"></div>
-                <div class="text bg-slate-600"></div>
+                <div class="long-text bg-slate-600 mb-4" />
+                <div class="text bg-slate-600" />
             {/if}
         </div>
     </div>
 </section>
 
 <style>
-    img,
+    .thumbnail-image,
     .thumbnail {
         width: 320px;
         height: 180px;

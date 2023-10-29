@@ -1,21 +1,21 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
+    import { user } from './stores/user';
     // notify the parent component of an event
     let dispatch = createEventDispatcher();
 </script>
-
 <nav class="bg-slate-900 h-16">
     <section class="yt-fixed flex items-center">
         <button class="menu m-4" on:click={() => dispatch('hamburger')}>
             <img width="24px" src="./bars-solid.svg" alt="Menu">
         </button>
-        <a href="/">logo</a>
+        <a href="/todo">logo</a>
     </section>
 
     <section class="yt-fill flex items-center">
         <div>
             <label class="sr-only" for="search">Search</label>
-            <input id="search" type="text" placeholder="Search" />
+            <input class="bg-slate-700 pl-4 pr-4 rounded-full" id="search" type="text" placeholder="Search" />
         </div>
         <button class="m-4">
             <img width="24px" src="./magnifying-glass-solid.svg" alt="search" />
@@ -27,7 +27,7 @@
             <img width="24px" src="./bell-solid.svg" alt="Notifications">
         </div>
         <div class="profile m-4">
-            profile icon
+            <a href="/login">{$user ? $user.name : 'Login'}</a>
         </div>
     </section>
 </nav>
@@ -37,6 +37,7 @@
         display: flex;
         position: relative;
         z-index: 51;
+        box-shadow: 10px 10px 100px black;
     }
     .yt-fixed {
         width: 250px;
