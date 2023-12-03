@@ -38,9 +38,23 @@ async function remove(id: string) {
   store.update((ideas) => ideas.filter((idea) => idea.$id !== id));
 }
 
+async function check(post: Models.Document) {
+  await databases.updateDocument(BLOG_DATABASE_ID, POSTS_COLLECTION_ID, post.$id, {
+    done: !post.done,
+  });
+}
+
+async function update(post: Models.Document, updatedTitle: string) {
+  await databases.updateDocument(BLOG_DATABASE_ID, POSTS_COLLECTION_ID, post.$id, {
+    title: updatedTitle,
+  });
+}
+
 export const blog = {
   subscribe: store.subscribe,
   init,
   add,
   remove,
+  check,
+  update,
 };

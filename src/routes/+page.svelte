@@ -1,18 +1,32 @@
-<script>
-	import Thumb from "$lib/thumb.svelte";
+<script lang="ts">
+  import { storage } from "$lib/appwrite";
+  import Thumb from "$lib/thumb.svelte";
   import { onMount } from "svelte";
   let loading = true;
-
   onMount(() => {
     setTimeout(() => {
-      // where the code runs for the timeout
       loading = false;
-      console.log('first');
     }, 5000);
-  })
+  });
+
+  let urls: string[] = [];
+
+  async function download() {
+    // list all the files from the bucket
+    let files = await storage.listFiles("65388a1ddd6fba947dc2");
+    // transform the list into image url (src)
+    urls = files.files.map((file) => {
+      const view = storage.getFileView(file.bucketId, file.$id);
+      return view.href;
+    });
+  }
 </script>
 
+<button class="btn btn-primary" on:click={download}>download file</button>
 <div class="flex subscriptions justify-between px-8 flex-wrap">
+  {#each urls as src}
+    <img {src} alt="" />
+  {/each}
   <!-- each of these thumbnails need to come from database, images to be stored on db -->
   <Thumb
     title="Man and dog"
@@ -21,7 +35,7 @@
     creator="Johny bigg apples"
     views="5"
     id={1}
-    loading={loading}
+    {loading}
   />
   <Thumb
     title="Serine Exploration"
@@ -30,7 +44,8 @@
     creator="Exploration+"
     views="51"
     id={2}
-    loading={loading} />
+    {loading}
+  />
   <Thumb
     title="Mountain Exploration+"
     thumbnail="./mountain-view.jpeg"
@@ -38,7 +53,8 @@
     creator="Exploration+"
     views="59"
     id={3}
-    loading={loading} />
+    {loading}
+  />
   <Thumb
     title="Starry Night"
     thumbnail="./starry-night.jpeg"
@@ -46,7 +62,8 @@
     creator="Relazation+"
     views="59"
     id={4}
-    loading={loading} />
+    {loading}
+  />
 
   <Thumb />
   <Thumb />

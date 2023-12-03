@@ -1,21 +1,22 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
     import { user } from './stores/user';
+    import Theme from "./theme.svelte";
     // notify the parent component of an event
     let dispatch = createEventDispatcher();
 </script>
-<nav class="bg-slate-900 h-16">
+<nav class="bg-neutral h-16">
     <section class="yt-fixed flex items-center">
         <button class="menu m-4" on:click={() => dispatch('hamburger')}>
             <img width="24px" src="./bars-solid.svg" alt="Menu">
         </button>
-        <a href="/todo">logo</a>
+        <Theme></Theme>
     </section>
 
     <section class="yt-fill flex items-center">
         <div>
             <label class="sr-only" for="search">Search</label>
-            <input class="bg-slate-700 pl-4 pr-4 rounded-full" id="search" type="text" placeholder="Search" />
+            <input class="bg-blend-multiply pl-4 pr-4 rounded-full" id="search" type="text" placeholder="Search" />
         </div>
         <button class="m-4">
             <img width="24px" src="./magnifying-glass-solid.svg" alt="search" />

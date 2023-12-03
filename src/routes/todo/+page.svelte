@@ -1,8 +1,7 @@
 <script lang="ts">
     import type { Todo } from "$lib/todo";
-    import { Button, Checkbox, TextInput } from "carbon-components-svelte";
     import { onMount } from "svelte";
-    import { v4 } from "uuid"; // <<<<<<
+    import { v4 } from "uuid";
 
     let description: string;
     const _id = "applings-todo-keys";
@@ -14,7 +13,7 @@
         const todo: Todo = {
             done: false,
             description: description,
-            key: v4(), // <<<<<<
+            key: v4(),
         };
 
         // spread operation
@@ -38,7 +37,6 @@
     });
 
     function doneItem(todo: Todo) {
-        // console.log(todo);
         localStorage.setItem(todo.key, JSON.stringify(todo)); // from newItem(...);
     }
 
@@ -58,42 +56,20 @@
     }
 </script>
 
-<div class="flex controls">
-    <TextInput bind:value={description}>New TODO</TextInput>
-    <Button size="field" on:click={() => saveItem()}>Create Todo</Button>
+<div class="flex controls mb-10">
+    <input class="input input-primary" type="text" bind:value={description} />
+    <button class="btn btn-primary" on:click={() => saveItem()}>Create Todo</button>
 </div>
 
-{#each todos as item}
-    <div class="flex" class:done={item.done}>
-        <Checkbox
-            bind:checked={item.done}
-            on:change={() => doneItem(item)}
-            labelText={item.description}
+{#each todos as todo}
+    <div class="flex items-center justify-between mb-10 w-[400px]">
+        <input type="checkbox" class="checkbox checkbox-primary"
+            bind:checked={todo.done}
+            on:change={() => doneItem(todo)}
         />
-        <Button on:click={() => deleteItem(item.key)}>Delete</Button>
+        <div class="flex-grow px-4">{todo.description}</div>
+        <button class="btn btn-primary" on:click={() => deleteItem(todo.key)}>Delete</button>
     </div>
 {:else}
     You've completed all your tasks!
 {/each}
-
-<!-- find out how to make random colors -->
-
-<style>
-    /* the . is targetting a class in your html */
-    .flex {
-        display: flex;
-        /* justify-content: flex-start; */
-        /* centers things vertically */
-        align-items: center;
-        margin-bottom: 10px;
-        border: 1px solid;
-    }
-
-    /* .done {
-        background-color: #3cf060;
-    } */
-
-    .controls {
-        margin-bottom: 20px;
-    }
-</style>
