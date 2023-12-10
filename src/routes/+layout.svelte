@@ -25,4 +25,8 @@
     .phantom {
         margin-left: 300px;
     }
+
+    main {
+        min-height: calc(100dvh - 64px);
+    }
 </style>
