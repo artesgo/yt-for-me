@@ -2,11 +2,13 @@
   import { cubicIn, cubicOut } from "svelte/easing";
   import type { Character } from "./character";
   import { gsap } from 'gsap';
+
   export let character: Character;
   export let reverse = false;
 
-  $: if (character.act) {
+  $: if (character && character.act) {
     const tl = gsap.timeline();
+
     tl.to('#'+character.id, {
         scale: 1.2,
         x: reverse ? 20 : -20,
@@ -14,6 +16,7 @@
         duration: 0.5,
         ease: cubicIn
     });
+
     tl.to('#'+character.id, {
         scale: 1,
         x: 0,
@@ -24,11 +27,21 @@
   }
 </script>
 
-<div id={character.id} class:attacking={character.act} class:reverse class="bg-neutral rounded-md text-neutral-content character">
-  <img class="portrait" src={'./battler/' + character.name + '.svg'} alt={character.name} />
-  <span class="hp">hp: {character.health}</span>
-  <span class="atk">atk: {character.attack}</span>
-</div>
+
+{#if character}
+  <div
+    id={character.id}
+    class:attacking={character.act}
+    class:reverse
+    class="bg-neutral rounded-md text-neutral-content character"
+  >
+
+    <img class="portrait" src={'./battler/' + character.name + '.svg'} alt={character.name} />
+    <span class="hp">hp: {character.health}</span>
+    <span class="atk">atk: {character.attack}</span>
+
+  </div>
+{/if}
 
 <style>
   .character {
