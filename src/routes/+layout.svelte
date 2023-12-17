@@ -6,16 +6,15 @@
 
     let clientWidth = 0;
     let showSideNav = false;
-    $: isMobile = clientWidth < 768;
-    $: show = isMobile || showSideNav;
+    $: mobile = clientWidth < 768;
+    $: show = showSideNav;
 </script>
 
 <!-- top level page container -->
-<!-- <div class="fixed min-h-screen -z-50 w-full"></div> -->
 <div data-theme={$theme} bind:clientWidth={clientWidth} class="min-h-screen">
     <Nav on:hamburger={() => showSideNav = !showSideNav } />
-    <Sidenav {show} />
-    <main class="px-10 py-4" class:phantom={!isMobile && showSideNav}>
+    <Sidenav {show} {mobile} />
+    <main class="px-10 py-4 mx-auto" class:phantom={!mobile && showSideNav}>
         <slot />
     </main>
     <!-- <Footer /> -->

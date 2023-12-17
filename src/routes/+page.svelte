@@ -23,7 +23,7 @@
 </script>
 
 <button class="btn btn-primary" on:click={download}>download file</button>
-<div class="flex subscriptions justify-between px-8 flex-wrap">
+<div class="flex subscriptions justify-around px-8 flex-wrap">
   {#each urls as src}
     <img {src} alt="" />
   {/each}
