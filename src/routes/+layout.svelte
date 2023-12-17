@@ -12,7 +12,7 @@
 
 <!-- top level page container -->
 <div data-theme={$theme} bind:clientWidth={clientWidth} class="min-h-screen">
-    <Nav on:hamburger={() => showSideNav = !showSideNav } />
+    <Nav {mobile} on:hamburger={() => showSideNav = !showSideNav } />
     <Sidenav {show} {mobile} />
     <main class="px-10 py-4 mx-auto" class:phantom={!mobile && showSideNav}>
         <slot />

@@ -37,7 +37,6 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        padding: 10px 200px;
     }
 
     /* media query : in this case, max-width means max size */
