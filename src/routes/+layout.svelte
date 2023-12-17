@@ -5,16 +5,15 @@
     import { theme } from '$lib/theme';
 
     let clientWidth = 0;
-    let showSideNav = false;
     $: mobile = clientWidth < 768;
-    $: show = showSideNav;
+    let show = false;
 </script>
 
 <!-- top level page container -->
 <div data-theme={$theme} bind:clientWidth={clientWidth} class="min-h-screen">
-    <Nav {mobile} on:hamburger={() => showSideNav = !showSideNav } />
-    <Sidenav {show} {mobile} />
-    <main class="px-10 py-4 mx-auto" class:phantom={!mobile && showSideNav}>
+    <Nav {mobile} on:hamburger={() => show = !show } />
+    <Sidenav bind:show={show} {mobile} />
+    <main class="px-10 py-4 mx-auto" class:phantom={!mobile && show}>
         <slot />
     </main>
     <!-- <Footer /> -->

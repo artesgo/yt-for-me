@@ -1,18 +1,29 @@
 <script lang="ts">
+  import Theme from "./theme.svelte";
+
   // creates a binding that let's outside
   // components influence the state here
   export let show = true;
   export let mobile = false;
+  function close() {
+    show = false;
+  }
 </script>
 
 {#if show}
   <section class="border border-solid border-primary bg-neutral text-neutral-content" class:mobile>
-    <a href="/" class="link hover:link-accent side-nav-item">Gallery</a>
-    <a href="/todo" class="link hover:link-accent side-nav-item">Todo</a>
-    <a href="/blog" class="link hover:link-accent side-nav-item">Blog</a>
-    <a href="/battler" class="link hover:link-accent side-nav-item">Battler</a>
-    <a href="/portfolio" class="link hover:link-accent side-nav-item">Portfolio</a>
-    <a href="/customization" class="link hover:link-accent side-nav-item">Customization</a>
+    
+    <a href="/" class="link hover:link-accent" on:click={close}>Gallery</a>
+    <a href="/todo" class="link hover:link-accent" on:click={close}>Todo</a>
+    <a href="/blog" class="link hover:link-accent" on:click={close}>Blog</a>
+    <a href="/battler" class="link hover:link-accent" on:click={close}>Battler</a>
+    <a href="/portfolio" class="link hover:link-accent" on:click={close}>Portfolio</a>
+    <a href="/customization" class="link hover:link-accent" on:click={close}>Customization</a>
+    <div class='my-8'>
+      {#if mobile}
+        <Theme></Theme>
+      {/if}
+    </div>
   </section>
 {/if}
 
