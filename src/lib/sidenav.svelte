@@ -11,8 +11,10 @@
 </script>
 
 {#if show}
-  <section class="border border-solid border-primary bg-neutral text-neutral-content" class:mobile>
-    
+  <section
+    class="border border-solid border-primary bg-neutral text-neutral-content"
+    class:mobile
+  >
     <a href="/" class="link hover:link-accent" on:click={close}>Gallery</a>
     <a href="/todo" class="link hover:link-accent" on:click={close}>Todo</a>
     <a href="/blog" class="link hover:link-accent" on:click={close}>Blog</a>

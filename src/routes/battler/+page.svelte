@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Character } from "$lib/battler/character";
     import Characters from "$lib/battler/characters.svelte";
+    import Store from "$lib/battler/store.svelte";
 
     let player1: Character[] = [
         { attack: 3, health: 8, name: "dog", act: false, id: "p1-1" },
@@ -40,28 +41,24 @@
     }
 
     // perform attacks from p1 to p2
-    function attack(p1: Character[], p2: Character[]) {
-        const [firstP1, ...otherP1] = p1;
+    function attack(p1: Character[], p2: Character[], index = 0) {
         const [firstP2] = p2;
-
-        // for safety, we check if there are still characters left to battle
-        if (firstP1 && firstP2) {
-            // update p1 with the attack from p2
-            firstP1.health -= firstP2.attack;
-            firstP1.act = true;
-            return [{...firstP1}, ...otherP1];
-        }
-        // this is a quirk where we create a new array to update the data
-        return p1;
+        return p1.map((character, i) => {
+            // does the index match the person being attacked
+            if (i === index) {
+                // this is the transformation
+                character.health -= firstP2.attack;
+                character.act = true;
+            }
+            return character;
+        });
     }
 
     function endAction(p1: Character[]) {
-        const [firstP1, ...otherP1] = p1;
-        if (firstP1) {
-            firstP1.act = false;
-            return [{...firstP1}, ...otherP1];
-        }
-        return p1;
+        return p1.map((character) => {
+            character.act = false;
+            return character;
+        });
     }
 
     // cleanup dead characters after turn
@@ -101,6 +98,8 @@
         {/if}
     </button>
 </div>
+
+<Store></Store>
 
 <style>
     .battler {
