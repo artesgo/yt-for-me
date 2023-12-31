@@ -3,6 +3,7 @@
     import Characters from "$lib/battler/characters.svelte";
     import Store from "$lib/battler/store.svelte";
 
+    let battling = false;
     let player1: Character[] = [
         { attack: 3, health: 8, name: "dog", act: false, id: "p1-1" },
         { attack: 3, health: 6, name: "bat", act: false, id: "p1-2" },
@@ -17,8 +18,6 @@
         { attack: 10, health: 7, name: "manta", act: false, id: "p2-4" },
     ];
     const template2 = [...player2];
-
-    let gameover = false;
 
     function reset() {
         player1 = [...template1];
@@ -45,7 +44,7 @@
         const [firstP2] = p2;
         return p1.map((character, i) => {
             // does the index match the person being attacked
-            if (i === index) {
+            if (i === index && firstP2) {
                 // this is the transformation
                 character.health -= firstP2.attack;
                 character.act = true;
@@ -63,43 +62,52 @@
 
     // cleanup dead characters after turn
     function cleanup(players: Character[]) {
+        console.log(players);
         if (players.length > 0) {
             return players.filter((player) => player && player.health > 0);
         }
-        gameover = true;
-        clearInterval(interval);
+        battling = false;
+        clearInterval(interval); // clears the game loop
         interval = undefined;
         return [];
     }
 
     let interval: number | undefined = 0;
-    // gameloop
+    // starts the gameloop / interval
     function start() {
-        gameover = false;
-        reset();
-        interval = setInterval(() => {
-            if (!gameover) {
-                takeTurn();
-            }
-        }, 1500); // 1.5 secs to attack each other
+        if (!battling) {
+            battling = true;
+            reset();
+            // this interval runs every 1.5 seconds
+            interval = setInterval(() => {
+                // this block of code runs every 1.5 seconds
+                if (battling) {
+                    takeTurn();
+                }
+                // end block of code
+            }, 1500); // 1.5 secs to attack each other
+        }
     }
 </script>
 
-<div class="battler flex justify-between align-middle mt-24 mx-auto">
-    <Characters characters={player1} reverse={true} />
-    <Characters characters={player2} />
-</div>
+{#if battling}
+    <div class="battler flex justify-between align-middle mt-24 mx-auto">
+        <Characters characters={player1} reverse={true} />
+        <Characters characters={player2} />
+    </div>
+{:else}
+    <Store></Store>
+{/if}
+
 <div class="flex justify-around">
     <button class="btn btn-primary" on:click={start}>
-        {#if gameover}
-            Start Battle!
+        {#if battling}
+            Battling!
         {:else}
-            Battling
+            Start Battle!
         {/if}
     </button>
 </div>
-
-<Store></Store>
 
 <style>
     .battler {
