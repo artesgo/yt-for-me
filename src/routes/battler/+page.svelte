@@ -4,13 +4,24 @@
   import Store from '$lib/battler/store.svelte';
 
   let battling = false;
+  // us our player store to keep track of this list
+  // save player build to the database
   let player1: Character[] = [
     { attack: 3, health: 8, name: 'dog', act: false, id: 'p1-1', level: 1 },
     { attack: 3, health: 6, name: 'bat', act: false, id: 'p1-2', level: 1 },
     { attack: 3, health: 8, name: 'dog', act: false, id: 'p1-3', level: 1 },
-    { attack: 5, health: 15, name: 'elephant', act: false, id: 'p1-4', level: 1 },
+    {
+      attack: 5,
+      health: 15,
+      name: 'elephant',
+      act: false,
+      id: 'p1-4',
+      level: 1,
+    },
   ];
   const template1 = [...player1];
+  // generate random attackers for the other list
+  // use random player builds from the database
   let player2: Character[] = [
     { attack: 3, health: 8, name: 'dog', act: false, id: 'p2-1', level: 1 },
     { attack: 5, health: 3, name: 'cat', act: false, id: 'p2-2', level: 1 },

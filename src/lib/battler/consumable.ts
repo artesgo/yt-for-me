@@ -1,4 +1,5 @@
 export interface IConsumable {
-    health: number;
-    attack: number;
+  health: number;
+  attack: number;
+  name: string;
 }
