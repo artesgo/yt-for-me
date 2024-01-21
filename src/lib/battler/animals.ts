@@ -1,39 +1,45 @@
-import type { Character } from "./character";
+import type { Character } from './character';
 
 export const ANIMALS: Character[] = [
   {
-    name: "elephant",
+    name: 'elephant',
     health: 20,
+    damage: 0,
     attack: 5,
     level: 2,
   },
   {
-    name: "dog",
+    name: 'dog',
     health: 8,
+    damage: 0,
     attack: 3,
     level: 1,
   },
   {
-    name: "cat",
+    name: 'cat',
     health: 5,
+    damage: 0,
     attack: 2,
     level: 1,
   },
   {
-    name: "turtle",
+    name: 'turtle',
     health: 10,
+    damage: 0,
     attack: 1,
     level: 1,
   },
   {
-    name: "wolf",
+    name: 'wolf',
     health: 10,
+    damage: 0,
     attack: 4,
     level: 1,
   },
   {
-    name: "manta",
+    name: 'manta',
     health: 10,
+    damage: 0,
     attack: 8,
     level: 2,
   },
@@ -42,28 +48,28 @@ export const ANIMALS: Character[] = [
 // generate list of random animals for purchase
 // generate 5 random animals based on level
 export function randomizeAnimals(level: number) {
-    const onlyOfLevel = ANIMALS.filter(animal => {
-        return animal.level <= level
-    });
+  const onlyOfLevel = ANIMALS.filter((animal) => {
+    return animal.level <= level;
+  });
 
-    // return 5 animals
-    return randomFromList(onlyOfLevel);
+  // return 5 animals
+  return randomFromList(onlyOfLevel);
 }
 
 /**
- * 
+ *
  * @param animalList filtered list of animals based on level
  * @returns a new list of random animals of that level
  */
 function randomFromList(animalList: Character[]) {
-    // create a new list of animals
-    const randomAnimals: Character[] = [];
+  // create a new list of animals
+  const randomAnimals: Character[] = [];
 
-    for (let i = 0; i < 5; i++) {
-        // example: 1.89 Math.floor will turn that into 1
-        const randomAnimalIndex = Math.floor(Math.random() * animalList.length);
-        randomAnimals.push(animalList[randomAnimalIndex]);
-    }
+  for (let i = 0; i < 5; i++) {
+    // example: 1.89 Math.floor will turn that into 1
+    const randomAnimalIndex = Math.floor(Math.random() * animalList.length);
+    randomAnimals.push(animalList[randomAnimalIndex]);
+  }
 
-    return randomAnimals;
+  return randomAnimals;
 }

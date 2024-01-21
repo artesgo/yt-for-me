@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getWallet } from '$lib/stores/wallet';
+  import { getPlayer } from '$lib/battler/player';
   import { onMount } from 'svelte';
   import { randomizeAnimals } from './animals';
   import type { Character } from './character';
@@ -8,6 +9,8 @@
   import { randomizeItems } from './items';
 
   const wallet = getWallet();
+  const player = getPlayer();
+
   let currentAnimals: Character[] = [];
   let currentItems: IConsumable[] = [];
   let target: Character;
@@ -24,6 +27,12 @@
   // buying and selling items / animals
   function buyAnimal(animal: Character) {
     // this goes to the player
+    player.add(animal);
+  }
+
+  function sellAnimal(animal: Character) {
+    // this goes to the player
+    player.remove(animal);
   }
 
   // TODO: pop up modal to select target
@@ -41,9 +50,6 @@
   });
 </script>
 
-<!-- display the purchasable animals -->
-<!-- display the purchasable buff items -->
-<!-- display how much money is in your wallet -->
 You Have ${$wallet}!
 
 <Characters
@@ -61,3 +67,9 @@ You Have ${$wallet}!
 {/each}
 
 <button class="btn btn-primary" on:click={roll}>Re-roll</button>
+
+<Characters
+  sell
+  characters={$player}
+  on:sell={(event) => sellAnimal(event.detail)}
+></Characters>

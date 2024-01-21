@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Theme from "./theme.svelte";
+  import Theme from './theme.svelte';
 
   // creates a binding that let's outside
   // components influence the state here
@@ -18,10 +18,14 @@
     <a href="/" class="link hover:link-accent" on:click={close}>Gallery</a>
     <a href="/todo" class="link hover:link-accent" on:click={close}>Todo</a>
     <a href="/blog" class="link hover:link-accent" on:click={close}>Blog</a>
-    <a href="/battler" class="link hover:link-accent" on:click={close}>Battler</a>
-    <a href="/portfolio" class="link hover:link-accent" on:click={close}>Portfolio</a>
-    <a href="/customization" class="link hover:link-accent" on:click={close}>Customization</a>
-    <div class='my-8'>
+    <a href="/battler" class="link hover:link-accent" on:click={close}
+      >Battler</a
+    >
+    <a href="/portfolio" class="link hover:link-accent" on:click={close}
+      >Portfolio</a
+    >
+    <!-- <a href="/customization" class="link hover:link-accent" on:click={close}>Customization</a> -->
+    <div class="my-8">
       {#if mobile}
         <Theme></Theme>
       {/if}
