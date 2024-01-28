@@ -1,30 +1,32 @@
 import type { Character } from './character';
 
 export const ANIMALS: Character[] = [
-  { name: 'bat familiar', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'blueb', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'crow', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'dragon', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'furbat', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'gryphon', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'imp', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'maiden', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'ogre', health: 20, damage: 0, attack: 5, level: 2 },
+  { name: 'bat familiar', health: 20, damage: 0, attack: 5, level: 1 },
+  { name: 'blueb', health: 20, damage: 0, attack: 5, level: 1 },
+  { name: 'crow', health: 20, damage: 0, attack: 5, level: 1 },
+  { name: 'furbat', health: 20, damage: 0, attack: 5, level: 1 },
+  { name: 'imp', health: 20, damage: 0, attack: 5, level: 1 },
+  { name: 'wisp', health: 20, damage: 0, attack: 5, level: 1 },
+  { name: 'wolfren', health: 20, damage: 0, attack: 5, level: 1 },
+  { name: 'crabboid', health: 20, damage: 0, attack: 5, level: 1 },
+
   { name: 'orb weaver', health: 20, damage: 0, attack: 5, level: 2 },
   { name: 'skelly archer', health: 20, damage: 0, attack: 5, level: 2 },
   { name: 'skelly daggers', health: 20, damage: 0, attack: 5, level: 2 },
   { name: 'skelly mage', health: 20, damage: 0, attack: 5, level: 2 },
   { name: 'skelly sword', health: 20, damage: 0, attack: 5, level: 2 },
+  { name: 'maiden', health: 20, damage: 0, attack: 5, level: 2 },
   { name: 'snek', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'steel golem', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'stone golem', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'treant', health: 20, damage: 0, attack: 5, level: 2 },
   { name: 'troll', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'unknown', health: 20, damage: 0, attack: 5, level: 2 },
   { name: 'venus muncher', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'wisp', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'wolfren', health: 20, damage: 0, attack: 5, level: 2 },
-  { name: 'crabboid', health: 20, damage: 0, attack: 5, level: 2 },
+
+  { name: 'dragon', health: 20, damage: 0, attack: 5, level: 3 },
+  { name: 'gryphon', health: 20, damage: 0, attack: 5, level: 3 },
+  { name: 'ogre', health: 20, damage: 0, attack: 5, level: 3 },
+  { name: 'steel golem', health: 20, damage: 0, attack: 5, level: 3 },
+  { name: 'stone golem', health: 20, damage: 0, attack: 5, level: 3 },
+  { name: 'treant', health: 20, damage: 0, attack: 5, level: 3 },
+  { name: 'unknown', health: 20, damage: 0, attack: 5, level: 3 },
 ];
 
 // generate list of random animals for purchase
