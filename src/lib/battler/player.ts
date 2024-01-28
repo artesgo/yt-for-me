@@ -1,29 +1,21 @@
 import { writable } from 'svelte/store';
 import type { Character } from './character';
+import { v4 } from 'uuid';
 
-// player's list of pets
 let player = writable<Character[]>([]);
 let enemy = writable<Character[]>([]);
 
-// next time, we start with this
 export function getPlayer() {
   const { subscribe, set, update } = player;
   return {
     subscribe,
-    add: (pet: Character) => {
-      // "[...list]", means use the items of existing list to recreate a new list
-      // "[...list, pet]" means we want to add a new item at the end
-      // "[pet, ...list]" if we put pet first, it means we want to put the new item first
-      update((list) => [...list, pet]);
+    add: (character: Character) => {
+      update((list) => [...list, { ...character, id: v4() }]);
     },
-    remove: (pet: Character) => {
-      // TODO: do some questions on filtering
-      update((list) => list.filter((existing) => existing.id !== pet.id));
+    remove: (character: Character) => {
+      update((list) => list.filter((existing) => existing.id !== character.id));
     },
-    resetHealth: () => {
-      // HOMEWORK:
-      update((list) => list.map((pet) => pet /** what do you do here */));
-    },
+    resetHealth: () => update(resetDamage),
     attacked: (enemy: Character[]) => {
       update((list) => attack(list, enemy));
     },
@@ -36,25 +28,22 @@ export function getEnemy() {
   return {
     subscribe,
     // TODO: regenerate enemy list
-    regenerate: () => {},
-    add: (pet: Character) => {
-      // "[...list]", means use the items of existing list to recreate a new list
-      // "[...list, pet]" means we want to add a new item at the end
-      // "[pet, ...list]" if we put pet first, it means we want to put the new item first
-      update((list) => [...list, pet]);
+    // regenerate: () => {},
+    add: (character: Character) => {
+      update((list) => [...list, { ...character, id: v4() }]);
     },
-    remove: (pet: Character) => {
-      // TODO: do some questions on filtering
-      update((list) => list.filter((existing) => existing.id !== pet.id));
+    // notice update gets a "list" parameter in the arrow function?
+    remove: (character: Character) => {
+      update((list) => list.filter((existing) => existing.id !== character.id));
     },
-    resetHealth: () => {
-      // HOMEWORK:
-      update((list) => list.map((pet) => pet /** what do you do here */));
-    },
+    // this parameter is passed implicitly to resetDamage without writing it all out
+    resetHealth: () => update(resetDamage),
+    // the above is the same as
+    // resetHealth: () => update((list) => resetDamage(list)),
     attacked: (enemy: Character[]) => {
       update((list) => attack(list, enemy));
     },
-    endAction: () => update((list) => endAction(list)),
+    endAction: () => update(endAction),
   };
 }
 
@@ -78,11 +67,19 @@ function endAction(p1: Character[]) {
   });
 }
 
+// this is the callback function
+function resetDamage(list: Character[]) {
+  return list.map((character) => {
+    character.damage = 0;
+    return character;
+  });
+}
+
 // cleanup dead characters after turn
-function cleanup(players: Character[]) {
-  // TODO: Get list of characters that are still alive
+export function cleanup(players: Character[]) {
   if (players.length > 0) {
-    return players.filter((player) => player && player.health > 0);
+    // convert to player health vs damage
+    return players.filter((player) => player && player.health > player.damage);
   }
   // move the below back to the page.svelte
   // battling = false;

@@ -2,7 +2,6 @@
   import { createEventDispatcher } from 'svelte';
   import Char from './char.svelte';
   import type { Character } from './character';
-  import { v4 } from 'uuid';
 
   export let characters: Character[] = [];
   export let reverse = false;
@@ -14,7 +13,7 @@
   function buy(character: Character) {
     // emit event from the buy
     // character.id = v4(); // this mutates the reference
-    dispatch('buy', { ...character, id: v4() });
+    dispatch('buy', { ...character });
   }
 
   function sold(character: Character) {

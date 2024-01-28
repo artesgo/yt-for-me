@@ -2,7 +2,8 @@
   import type { Character } from '$lib/battler/character';
   import Characters from '$lib/battler/characters.svelte';
   import Store from '$lib/battler/store.svelte';
-  import { getPlayer, getEnemy } from '$lib/battler/player';
+  import { getPlayer, getEnemy, cleanup } from '$lib/battler/player';
+  import { randomAnimal } from '$lib/battler/animals';
 
   let battling = false;
   // us our player store to keep track of this list
@@ -11,6 +12,13 @@
   // generate random attackers for the other list
   // use random player builds from the database
   let player2 = getEnemy();
+
+  player2.add(randomAnimal());
+  player2.add(randomAnimal());
+  player2.add(randomAnimal());
+
+  $: player1Alive = cleanup($player1);
+  $: player2Alive = cleanup($player2);
 
   function reset() {
     player1.resetHealth();
