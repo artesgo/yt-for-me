@@ -1,16 +1,23 @@
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 import type { Character } from './character';
 import { v4 } from 'uuid';
 
-let player = writable<Character[]>([]);
-let enemy = writable<Character[]>([]);
+// DRY - don't repeat yourself
+// if you're copying and pasting code
 
-export function getPlayer() {
-  const { subscribe, set, update } = player;
+// the stores
+export let player = writable<Character[]>([]);
+export let enemy = writable<Character[]>([]);
+
+// the helper function exposes a way of changing our data in a uniform way
+// from anywhere, this makes it so that you don't have to repeat logic
+export function getPlayer(store: Writable<Character[]>) {
+  const { subscribe, update } = store;
+
   return {
-    subscribe,
+    subscribe, // allows the $ syntax to be used by the helper
     add: (character: Character) => {
-      update((list) => [...list, { ...character, id: v4() }]);
+      update((list) => [...list, { ...character, id: 'id-' + v4() }]);
     },
     remove: (character: Character) => {
       update((list) => list.filter((existing) => existing.id !== character.id));
@@ -19,50 +26,23 @@ export function getPlayer() {
     attacked: (enemy: Character[]) => {
       update((list) => attack(list, enemy));
     },
-    endAction: () => update((list) => endAction(list)),
+    cleanup: () => update(cleanup),
   };
 }
 
-export function getEnemy() {
-  const { subscribe, set, update } = enemy;
-  return {
-    subscribe,
-    // TODO: regenerate enemy list
-    // regenerate: () => {},
-    add: (character: Character) => {
-      update((list) => [...list, { ...character, id: v4() }]);
-    },
-    // notice update gets a "list" parameter in the arrow function?
-    remove: (character: Character) => {
-      update((list) => list.filter((existing) => existing.id !== character.id));
-    },
-    // this parameter is passed implicitly to resetDamage without writing it all out
-    resetHealth: () => update(resetDamage),
-    // the above is the same as
-    // resetHealth: () => update((list) => resetDamage(list)),
-    attacked: (enemy: Character[]) => {
-      update((list) => attack(list, enemy));
-    },
-    endAction: () => update(endAction),
-  };
-}
+function attack(p1: Character[], p2: Character[]) {
+  // find retrieves the first item that matches
+  const player1 = p1.find((char) => !char.dead);
+  const player2 = p2.find((char) => !char.dead);
 
-function attack(p1: Character[], p2: Character[], index = 0) {
-  const [firstP2] = p2;
-  return p1.map((character, i) => {
-    // does the index match the person being attacked
-    if (i === index && firstP2) {
-      // this is the transformation
-      character.health -= firstP2.attack;
+  return p1.map((character) => {
+    // does the id* match the person being attacked
+    if (player1 && player2 && player1.id === character.id) {
+      // changing the damage tracking to another variable so that it can be easily reset
+      // we don't have to track the initial health if we just track damage instead
+      character.damage += player2.attack;
       character.act = true;
     }
-    return character;
-  });
-}
-
-function endAction(p1: Character[]) {
-  return p1.map((character) => {
-    character.act = false;
     return character;
   });
 }
@@ -76,14 +56,12 @@ function resetDamage(list: Character[]) {
 }
 
 // cleanup dead characters after turn
-export function cleanup(players: Character[]) {
-  if (players.length > 0) {
-    // convert to player health vs damage
-    return players.filter((player) => player && player.health > player.damage);
-  }
-  // move the below back to the page.svelte
-  // battling = false;
-  // clearInterval(interval); // clears the game loop
-  // interval = undefined;
-  return [];
+function cleanup(players: Character[]) {
+  return players.map((player) => {
+    if (player.damage >= player.health) {
+      player.dead = true;
+    }
+    player.act = false;
+    return player;
+  });
 }

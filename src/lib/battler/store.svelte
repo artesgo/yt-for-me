@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getWallet } from '$lib/stores/wallet';
-  import { getPlayer } from '$lib/battler/player';
+  import { getPlayer, player } from '$lib/battler/player';
   import { onMount } from 'svelte';
   import { randomizeAnimals } from './animals';
   import type { Character } from './character';
@@ -9,7 +9,7 @@
   import { randomizeItems } from './items';
 
   const wallet = getWallet();
-  const player = getPlayer();
+  const playerStore = getPlayer(player);
 
   let currentAnimals: Character[] = [];
   let currentItems: IConsumable[] = [];
@@ -24,15 +24,23 @@
     currentItems = randomizeItems(); // the homework item
   }
 
+  let hitLimit = false;
   // buying and selling items / animals
   function buyAnimal(animal: Character) {
+    hitLimit = false;
+
     // this goes to the player
-    player.add(animal);
+    if ($playerStore.length < 5) {
+      playerStore.add(animal);
+    } else {
+      hitLimit = true;
+    }
   }
 
   function sellAnimal(animal: Character) {
     // this goes to the player
-    player.remove(animal);
+    playerStore.remove(animal);
+    hitLimit = false;
   }
 
   // TODO: pop up modal to select target
@@ -52,6 +60,12 @@
 
 You Have ${$wallet}!
 
+{#if hitLimit}
+  <div class="alert alert-warning">
+    You've Hit the limit of how many characters you can own!
+  </div>
+{/if}
+
 <Characters
   store
   characters={currentAnimals}
@@ -63,6 +77,7 @@ You Have ${$wallet}!
   <div>
     {item.name} - atk: {item.attack} - hp: {item.health}
   </div>
+
   <button on:click={() => buyItem(item, target)}>Buy</button>
 {/each}
 
@@ -70,6 +85,6 @@ You Have ${$wallet}!
 
 <Characters
   sell
-  characters={$player}
+  characters={$playerStore}
   on:sell={(event) => sellAnimal(event.detail)}
 ></Characters>
